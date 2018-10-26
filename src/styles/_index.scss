@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body{
+  font-family: $base-font;
+  font-size: $base-font-size;
+}
+body, html, #root{
+  min-height: 100vh;
+}
+
+.t--light{
+  color: $base-black;
+  background-color: $base-white;
+}
+
+.t--dark{
+  color: $base-white;
+  background-color: $base-black;
+}
+
+.container{
+  max-width: 400px;
+  margin: 0 auto;
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 1;
+  transition: opacity .5s ease;
+}
+
+.blur{
+  opacity: 0;
+}
+
+header{
+  text-align: center;
+  margin-top: 35px;
+}
+
+.control, #reset{
+  transition: all .5s ease;
+}
+
+.clock{
+  margin: 25px auto;
+  position: relative;
+  width: 80%;
+  max-width: 500px;
+  border: 1px solid lighten($base-black, 40%);
+  border-radius: 50%;
+  cursor: pointer;
+  &::before{
+    content:     "";
+    display:     block;
+    padding-top: 100%;
+  }
+}
+
+svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+}
+.outer {
+  fill: transparent;
+  stroke: $base-green;
+  stroke-width: 3;
+  stroke-dasharray: 1570;
+  transform: rotate(-90deg) translate(-100%);
+}
+.circle-anim{
+  animation-name: dash;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes dash {
+  0%{
+    stroke: $base-green;
+    stroke-dashoffset: 0;
+  }
+  40%{ 
+    stroke: $base-green;
+  }
+  50%{
+    stroke: $base-yellow;
+  }
+  80%{
+    stroke: $base-yellow;
+  }
+  100%{
+    stroke-dashoffset: 1570;
+    stroke: $base-red;
+  }
+}
+
+#start_stop{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top:      0;
+  left:     0;
+  bottom:   0;
+  right:    0;
+}
+#timer-label{
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 25px;
+}
+#time-left{
+  font-size: 4em;
+}
+
+.control-container{
+  width: 100%;
+  display: flex;
+}
+
+.control{
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.5em;
+  flex: 1;
+}
+.control-com{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#reset{
+  margin: 55px auto;
+  padding: 10px 35px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  background: $base-white;
+  color: $base-black;
+  &:hover{
+    color: $base-blue;
+  }
+  &:focus{
+    outline: none;
+  }
+}
+
+.control-button{
+  font-size: 1em;
+  background: $base-white;
+  border: none;
+  cursor: pointer;
+  &:focus{
+    outline: none;
+  }
+}
+
+#break-increment, #session-increment{
+  &:hover{
+    color: $base-green;
+  }
+}
+#break-decrement, #session-decrement{
+  &:hover{
+    color: $base-red;
+  }
+}
+
+
+@media only screen and (min-width: 768px){
+  .container{
+    max-width: 650px;
+  }
+  #timer-label{
+    font-size: 2.5em;
+  }
+}
+
+@media only screen and (min-width: 992px){
+  .container{
+    max-width: 840px;
+  }
+}
+
+@media only screen and (min-width: 1200px){
+  .container{
+    max-width: 1020px;
+  }
+}
