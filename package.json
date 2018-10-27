@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "accurate-interval": "^1.0.9",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
     "node-sass": "^4.9.4",

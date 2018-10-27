@@ -21,11 +21,11 @@ const Clock = ({ timerState, handleTimer, parseSeconds, handleMouse, hover, time
         <circle className="outer circle-anim" cx='50%' cy='50%' r='50%' style={anim} />
       </svg>
       <div id='start_stop' onClick={handleTimer} onMouseOver={(e) => handleMouse(e)} onMouseOut={(e) => handleMouse(e)}>
-        <div id='timer-label'>
+        <div id='timer-label' className='color-time-anim' style={anim}>
           {timerLabel}
         </div>
 
-        <div id='time-left'>
+        <div id='time-left' className='color-time-anim' style={anim}>
           {parseSeconds()}
         </div>
       </div>

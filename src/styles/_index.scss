@@ -70,7 +70,7 @@ svg {
   fill: transparent;
   stroke: $base-green;
   stroke-width: 3;
-  stroke-dasharray: 1570;
+  stroke-dasharray: 804;
   transform: rotate(-90deg) translate(-100%);
 }
 .circle-anim{
@@ -78,25 +78,12 @@ svg {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-@keyframes dash {
-  0%{
-    stroke: $base-green;
-    stroke-dashoffset: 0;
-  }
-  40%{ 
-    stroke: $base-green;
-  }
-  50%{
-    stroke: $base-yellow;
-  }
-  80%{
-    stroke: $base-yellow;
-  }
-  100%{
-    stroke-dashoffset: 1570;
-    stroke: $base-red;
-  }
+.color-time-anim{
+  animation-name: color-time;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
+
 
 #start_stop{
   display: flex;
@@ -110,7 +97,7 @@ svg {
   right:    0;
 }
 #timer-label{
-  font-size: 1.8em;
+  font-size: 1.7em;
   text-align: center;
   margin-bottom: 25px;
 }
@@ -178,6 +165,119 @@ svg {
   }
 }
 
+@keyframes dash {
+  0%{
+    stroke: $base-green;
+    stroke-dashoffset: 0;
+  }
+  40%{ 
+    stroke: $base-green;
+  }
+  50%{
+    stroke: $base-yellow;
+  }
+  80%{
+    stroke: $base-yellow;
+  }
+  100%{
+    stroke-dashoffset: 804;
+    stroke: $base-red;
+  }
+}
+
+@keyframes color-time {
+  0%{
+    color: $base-green;
+  }
+  40%{ 
+    color: $base-green;
+  }
+  50%{
+    color: $base-yellow;
+  }
+  80%{
+    color: $base-yellow;
+  }
+  100%{
+    color: $base-red;
+  }
+}
+
+
+@media only screen and (min-width: 360px){
+  .outer{
+    stroke-dasharray: 904;
+  }
+  @keyframes dash {
+    0%{
+      stroke: $base-green;
+      stroke-dashoffset: 0;
+    }
+    40%{ 
+      stroke: $base-green;
+    }
+    50%{
+      stroke: $base-yellow;
+    }
+    80%{
+      stroke: $base-yellow;
+    }
+    100%{
+      stroke-dashoffset: 904;
+      stroke: $base-red;
+    }
+  }
+}
+
+@media only screen and (min-width: 375px){
+  .outer{
+    stroke-dasharray: 942;
+  }
+  @keyframes dash {
+    0%{
+      stroke: $base-green;
+      stroke-dashoffset: 0;
+    }
+    40%{ 
+      stroke: $base-green;
+    }
+    50%{
+      stroke: $base-yellow;
+    }
+    80%{
+      stroke: $base-yellow;
+    }
+    100%{
+      stroke-dashoffset: 942;
+      stroke: $base-red;
+    }
+  }
+}
+
+@media only screen and (min-width: 400px){
+  .outer{
+    stroke-dasharray: 1005;
+  }
+  @keyframes dash {
+    0%{
+      stroke: $base-green;
+      stroke-dashoffset: 0;
+    }
+    40%{ 
+      stroke: $base-green;
+    }
+    50%{
+      stroke: $base-yellow;
+    }
+    80%{
+      stroke: $base-yellow;
+    }
+    100%{
+      stroke-dashoffset: 1005;
+      stroke: $base-red;
+    }
+  }
+}
 
 @media only screen and (min-width: 768px){
   .container{
@@ -185,6 +285,28 @@ svg {
   }
   #timer-label{
     font-size: 2.5em;
+  }
+  .outer{
+    stroke-dasharray: 1570;
+  }
+  @keyframes dash {
+    0%{
+      stroke: $base-green;
+      stroke-dashoffset: 0;
+    }
+    40%{ 
+      stroke: $base-green;
+    }
+    50%{
+      stroke: $base-yellow;
+    }
+    80%{
+      stroke: $base-yellow;
+    }
+    100%{
+      stroke-dashoffset: 1570;
+      stroke: $base-red;
+    }
   }
 }
 

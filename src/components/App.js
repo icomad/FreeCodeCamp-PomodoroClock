@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
+import accurateInterval from 'accurate-interval';
 
 import Clock from './Clock';
 import Control from './Control';
@@ -32,26 +33,37 @@ export class App extends Component {
       timer: '',
       hover: 0,
     });
+    document.querySelector('circle').classList.remove('circle-anim');
+    document.querySelector('#time-left').classList.remove('color-time-anim');
+    document.querySelector('#timer-label').classList.remove('color-time-anim');
     this.alarm.pause();
     this.alarm.currentTime = 0;
-    this.state.timer && clearInterval(this.state.timer);
+    this.state.timer && this.state.timer.clear();
   }
 
   handleTimer = () => {
-    this.setState(
-      (prevState) => ({
-        timerIsActive: !prevState.timerIsActive,
-      }),
-      _ => {
-        _ = this.state.timerIsActive ? this.startTimer() : this.state.timer && clearInterval(this.state.timer)
-      }
-    );
+    const { timerIsActive } = this.state;
+    const _ = timerIsActive ?
+      (
+        this.setState({ timerIsActive: !timerIsActive }),
+        this.state.timer && this.state.timer.clear()
+      )
+      :
+      (
+        this.startTimer(),
+        document.querySelector('circle').classList.add('circle-anim'),
+        document.querySelector('#time-left').classList.add('color-time-anim'),
+        document.querySelector('#timer-label').classList.add('color-time-anim'),
+        this.setState({ timerIsActive: !timerIsActive })
+      );
   }
 
   startTimer = () => {
     document.querySelector('circle').classList.add('circle-anim');
+    document.querySelector('#time-left').classList.add('color-time-anim');
+    document.querySelector('#timer-label').classList.add('color-time-anim');
     this.setState({
-      timer: setInterval(() => {
+      timer: accurateInterval(() => {
         this.decrementTimer();
         this.timerStateControl();
       }, 1000)
@@ -66,14 +78,18 @@ export class App extends Component {
 
     const { timeLeft, breakLength, sessionLength, timerState, timer } = this.state;
     this.playAlarm(timeLeft);
-    if (timeLeft === 0) document.querySelector('circle').classList.remove('circle-anim');
+    if (timeLeft === 0) {
+      document.querySelector('circle').classList.remove('circle-anim');
+      document.querySelector('#time-left').classList.remove('color-time-anim');
+      document.querySelector('#timer-label').classList.remove('color-time-anim');
+    }
     let _ = timeLeft < 0 ? (
       timerState ? (
-        timer && clearInterval(timer),
+        timer && timer.clear(),
         this.setState({ timeLeft: breakLength * 60, timerState: 0 }),
         this.startTimer()
       ) : (
-          timer && clearInterval(timer),
+          timer && timer.clear(),
           this.setState({ timeLeft: sessionLength * 60, timerState: 1 }),
           this.startTimer()
         )
@@ -92,15 +108,22 @@ export class App extends Component {
   handleControl = (e, type) => {
     let { sessionLength, breakLength, timerState, timeLeft, timerIsActive } = this.state;
     if (timerIsActive) return;
+    if ((timerState && type === 'session') || (!timerState && type === 'break')) {
+      document.querySelector('circle').classList.remove('circle-anim');
+      document.querySelector('#time-left').classList.remove('color-time-anim');
+      document.querySelector('#timer-label').classList.remove('color-time-anim');
+    }
     if (type === 'session') {
       sessionLength += parseInt(e.target.dataset.value);
       sessionLength += sessionLength > 60 ? -1 : (sessionLength < 1 ? 1 : 0);
-      this.setState({ sessionLength, timeLeft: timerState ? sessionLength * 60 : timeLeft });
+      timeLeft = timerState ? sessionLength * 60 : timeLeft;
+      this.setState({ sessionLength, timeLeft });
     }
     else {
       breakLength += parseInt(e.target.dataset.value);
       breakLength += breakLength > 60 ? -1 : (breakLength < 1 ? 1 : 0);
-      this.setState({ breakLength, timeLeft: timerState ? timeLeft : breakLength * 60 });
+      timeLeft = timerState ? timeLeft : breakLength * 60;
+      this.setState({ breakLength, timeLeft });
     }
   }
 
